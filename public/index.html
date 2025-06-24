@@ -1,0 +1,100 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>Acesso - Quadro de Disponibilidade</title>
+  <link rel="stylesheet" href="style.css">
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+  <link rel="icon" type="image/png" href="favicon.png">
+</head>
+<body>
+  <div class="login-container">
+    <div class="login-card">
+      <div class="logo-section">
+        <img src="logomarca.png" alt="Logo Pernambuco III" class="logo">
+        <h1 class="system-title">Quadro de Disponibilidade</h1>
+        <p class="system-subtitle">Sistema de Monitoramento de Equipamentos</p>
+      </div>
+      
+      <form class="login-form" id="loginForm">
+        <div class="input-group">
+          <label for="login" class="input-label">Usuário</label>
+          <input type="text" id="login" class="input-field" placeholder="Digite seu usuário" required>
+        </div>
+        
+        <div class="input-group">
+          <label for="senha" class="input-label">Senha</label>
+          <input type="password" id="senha" class="input-field" placeholder="Digite sua senha" required>
+        </div>
+        
+        <button type="submit" class="login-button">
+          <span class="button-text">Entrar</span>
+          <div class="button-loader" style="display: none;"></div>
+        </button>
+        
+        <div id="mensagem" class="error-message"></div>
+      </form>
+      
+      <div class="login-footer">
+        <p>Sistema desenvolvido para monitoramento em tempo real</p>
+      </div>
+    </div>
+    
+    <div class="background-pattern"></div>
+  </div>
+
+  <script>
+    document.getElementById('loginForm').addEventListener('submit', function(e) {
+      e.preventDefault();
+      entrar();
+    });
+
+    function entrar() {
+      const login = document.getElementById("login").value.toLowerCase().trim();
+      const senha = document.getElementById("senha").value;
+      const mensagem = document.getElementById("mensagem");
+      const button = document.querySelector('.login-button');
+      const buttonText = document.querySelector('.button-text');
+      const buttonLoader = document.querySelector('.button-loader');
+      
+      // Limpar mensagem anterior
+      mensagem.textContent = "";
+      mensagem.className = "error-message";
+      
+      // Mostrar loading
+      buttonText.style.display = 'none';
+      buttonLoader.style.display = 'block';
+      button.disabled = true;
+      
+      // Simular delay de autenticação
+      setTimeout(() => {
+        if (login === "admin" && senha === "admin") {
+          mensagem.textContent = "Login realizado com sucesso!";
+          mensagem.className = "success-message";
+          setTimeout(() => {
+            window.location.href = "entrada.html";
+          }, 1000);
+        } else if (login === "operador" && senha === "operador") {
+          mensagem.textContent = "Login realizado com sucesso!";
+          mensagem.className = "success-message";
+          setTimeout(() => {
+            window.location.href = "status.html";
+          }, 1000);
+        } else {
+          mensagem.textContent = "Usuário ou senha inválidos.";
+          mensagem.className = "error-message show";
+          
+          // Restaurar botão
+          buttonText.style.display = 'block';
+          buttonLoader.style.display = 'none';
+          button.disabled = false;
+        }
+      }, 1500);
+    }
+  </script>
+</body>
+</html>
+
